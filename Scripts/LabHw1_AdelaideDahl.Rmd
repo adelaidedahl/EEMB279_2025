@@ -1,0 +1,135 @@
+---
+title: "Lab 1 Homework"
+author: 'Adelaide Dahl'
+output:
+  html_document: default
+date: "January 9, 2025"
+---
+
+# Homework exercise: Lab 1
+
+
+1A. Use the : or `c()` or `seq()` function to create a vector of numbers that ranges from 1 to 10. (1 pt)
+1B. Name the vector "vector.1" using variable assignment. (1 pt)
+1C. Print the vector. (1 pt)
+*Note: Make sure to ANNOTATE your code for full credit!*
+```{r}
+#making the vector - I did the single didgit numbers of fibonacci sequence because science in nature is cool!
+
+#it doesnt say how long to make this vector? So I'm going to go off of vibes
+
+#1A and 1B here (since the <- allows me to assign the vector to the name 'vector.1':
+vector.1 <- c(1, 1, 2, 3, 5, 8)
+
+#1C:
+print(vector.1)
+
+```
+
+2A. Use the `rep()` function to create a holding vector for a `for()` loop populated with NaN. Make this vector the same length as vector.1 from #1 (a length of 10). (1 pt)
+2B. Name the vector "vector.2" using variable assignment. (1 pt)
+2C. Print the vector. (1 pt)
+*Note: Make sure to ANNOTATE your code for full credit!*
+```{r}
+#first make holding vector
+#since it wasn't specified in question 1 to make vector.1 length of 10 (just says numbers from 1 to 10 and my vibes were wrong), I need to make a new vector that does have that length
+
+#new vector of length 10 with sequential numbers from 1 to 10
+
+vector.1b <- seq(from = 1, to = 10, length.out = 10)
+
+#now I'm gonna use that vector of length 10 (vector.1b) as the holding vector
+
+#2A and B (since I am also naming the vector here):
+vector.2 <- rep(NaN, length(vector.1b))
+
+
+```
+
+3. Write in words what each line of code means as an annotation (5 pts)
+```{r}
+vector.1 <- 1:10 # making a vector of length 10 with integers from 1 to 10 and assigning that vector to the name "vector.1". This will override the vector.1 I wrote earlier
+
+vector.1 # print the vector
+
+vector.2 <- rep(NaN, times = length(vector.1)) # make a holding vector of the same length as vector.1 but instead of integers, it is filled with "NA" values - this gives us somewhere to save the output from our for() loop
+
+for(i in 1:length(vector.1)) { # creating a for() loop that takes integers (elements? I'm not sure what you call them) from vector.1 (starting at the first one) until the end of the vector (entire length) (we are going to go through until we are all the way through vector.1, indexing)
+  vector.2[i] <- vector.1[i] + 1 # assigning the output to the new vector (vector.2) will be the original vector (vector.1) with 1 added to each integer (same length)
+} # closing the command
+
+vector.2 # print vector.2
+```
+
+4. In #3 you used the letter 'i' to denote each variable in vector.1 and vector.2. If you replaced 'i' with 'j', would anything change about your output? Please explain your answer in the space below. (2 pts)
+
+no it would not change the output! 'i' is a placeholder and as long as it is consistent across the loop, the loop will reference it - 'i' just serves as an index for your command
+
+
+5. We will use a `for()` loop to iterate over a vector and solve for variable 'y' using the `y = mx + b` equation. Please follow the prompts below. Some prompts have been completed for you. (8 pts)
+*Note: Make sure to ANNOTATE your code for full credit!*
+```{r}
+# Use variable assignment to assign 10 as b and 1 as m
+b <- 10
+m <- 1
+
+# Create a vector that ranges from 1 to 100 and name it 'x' using variable assignment. (2 pts)
+####### WRITE YOUR ANSWER HERE #######
+
+x <- seq(from = 1, to = 100, length.out = 100)
+#it was not specified how long to make this vector but I'm assuming length 100
+
+
+######################################
+
+# Create a holding vector for 'y' using the rep() function that is of the same length as vector x, but populate this vector with NaN. (2 pts)
+####### WRITE YOUR ANSWER HERE #######
+
+y <- rep(NaN, times = length(x))
+
+
+######################################
+
+# Write out what each line below means in words:
+for (i in 1:length(x)) { # creating a for() loop that says for every integer (i) output a value up to the length of vector x (the 'i' allows you to index the vector one at a time)
+  y[i] <- m * x[i] + b # each element in the new vector (held in vector.2) will equal the slope (m = 1) times the element in vector x plus the intercept (b = 10)
+} #close the command
+
+# Print y (1 pt)
+####### WRITE YOUR ANSWER HERE #######
+y
+
+
+######################################
+
+# Use the plot function to plot y as a function of x 
+plot(y~x)
+```
+
+6. Write a `for()` loop to 1) take the square root and then 2) add 2 for each value in a vector. 
+*Note: Make sure to ANNOTATE your code for full credit!*
+```{r}
+# vector of values
+fibseq <- c(0, 1, 1, 2, 3, 5, 8, 13, 21, 34)
+#my favorite sequence! i didn't see this question before i did 1A i love this!
+
+# create a holding vector (1 pt)
+
+holdvect <- rep(NaN, times = length(fibseq))
+
+
+# write a for() loop (2 pts)
+####### WRITE YOUR FOR() LOOP HERE ########
+
+for(i in 1:length(fibseq)) {
+  holdvect[i] <- sqrt(fibseq[i]) + 2 }
+
+
+
+###########################################
+
+# print the final vector (1 pt)
+holdvect
+
+
+```
