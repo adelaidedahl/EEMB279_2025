@@ -1,0 +1,57 @@
+---
+title: "Modeling_project_group"
+output: html_document
+date: "2025-02-10"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Group/general info
+#Purpose:
+This is an R Markdown document for the modeling group project...
+
+```{r libraries}
+library(vegan)
+```
+
+#Parameters
+for Table 1 in the paper - setting parameters for the models
+```{r parameter, echo=FALSE}
+#VARIABLES
+CL  #live coral on open substrate
+CD  #dead coral
+CP #Live coral on dead coral
+ME #Exposed macroalgae
+MP #Protected macroalgae
+S #Empty space; colonizable by coral or macroalgae
+
+#PARAMETERS (change in proportional cover/year)
+gc <- 0.1 #growth rate of coral
+gm <- 0.6 
+
+```
+
+
+#Emma (equation 1)
+```{r}
+
+```
+
+
+#Addie (equation 2)
+```{r}
+
+```
+
+
+#Mads (equation 3)
+```{r}
+
+```
+
+#FROM GUIDELINES:
+At least one figure* presenting time-series simulations of the model. This figure should show how outcomes differ as a function of an interesting parameter(s). Make sure your figure includes a caption! (If you have many state variables, sometimes it’s helpful for this to be split into two or more figures.)
+
+At least one figure* presenting a bifurcation diagram with respect to an interesting parameter. Make sure your figure includes a descriptive caption!
