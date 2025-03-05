@@ -1,6 +1,6 @@
 ---
 title: 'Lab 5: Managing the recovery of predator-prey systems'
-author: 'your name here'
+author: 'Adelaide Dahl'
 output: 
   html_document: # PLEASE DO NOT CHANGE THIS
     toc: true # PLEASE DO NOT CHANGE THIS
@@ -807,41 +807,40 @@ t_stopP <- 149 #3
 
 ```
 
-## Synchronous recovery 100 to 210
+## Prey first recovery 100 to 210
 
 ```{r}
 # creating holding vectors and storing initial conditions
-X.simu3 <- NaN*tset2
-X.simu3[1] <- X0_dis
-P.simu3 <- NaN*tset2
-P.simu3[1] <- P0_dis
+# creating holding vectors and storing initial conditions
+X.simu5 <- NaN*tset2
+X.simu5[1] <- X0_dis
+P.simu5 <- NaN*tset2
+P.simu5[1] <- P0_dis
 
-# using tset2: time from 100 to 210
-for(i in 2:length(tset2)){ #start at time step 2 from the second time step we set
-	
-  # if else statements
-  ## if current time step is before (less than) t_stophunt hunting pressure stays as h_p
-  ## else hunting pressure is set to 0 (no hunting after t_stophunt)
-	if(tset2[i] < t_stophunt){ h_p_now <- h_p } else { h_p_now <- 0 }
-	
-  ## if current time step is before (less than) t_stophunt hunting pressure stays as h_x
-  ## else hunting pressure is set to 0 (no hunting after t_stophunt)
+for(i in 2:length(tset2)){
+  
+  # if time is before t_stophunt, h_x_now = h_x --> switched hunting stop with time above
+  # else, h_x_now = 0
 	if(tset2[i] < t_stophunt){ h_x_now <- h_x } else { h_x_now <- 0 }
-	
+  
+  # if time is before t_stopX, h_p_now = h_p --> switched with above
+  # else, h_p_now = 0
+	if(tset2[i] < t_stopX){ h_p_now <- h_p } else { h_p_now <- 0 }
+
   # calculating change in time
 	dt <- tset2[i]-tset2[i-1]
 	
 	# storing temporary variables
-	X <- X.simu3[i-1] #prey at previous step
-	P <- P.simu3[i-1] #preds at previous step
+	X <- X.simu5[i-1]
+	P <- P.simu5[i-1]
 	
 	# calculating change in population size
-	dX <- (r_x*X*(1-X/K_x) - a_x*P*X - h_x_now*X ) * dt #hunting equation for prey
-	dP <- (P*(c*(a_x*X+a_y*Y)-d_p)*(1-P/K_p) - h_p_now*P ) * dt #hunting equation for preds
+	dX <- ( r_x*X*(1-X/K_x) - a_x*P*X - h_x_now*X ) * dt #prey
+	dP <- ( P*(c*(a_x*X+a_y*Y)-d_p)*(1-P/K_p) - h_p_now*P ) * dt #pred
 	
 	# calculating total population size and storing in holding vector
-	X.simu3[i] <- X.simu3[i-1] + dX
-	P.simu3[i] <- P.simu3[i-1] + dP
+	X.simu5[i] <- X.simu5[i-1] + dX
+	P.simu5[i] <- P.simu5[i-1] + dP
 }
 ```
 
@@ -853,24 +852,23 @@ Make a timeseries plot like that in Part 4 (i.e., showing a timeseries from year
 
 Be sure to (1) label your axes, (2) include a legend, and (3) indicate when harvest of predators and prey is occurring.  
 
-##?this doesnt necessarily show prey "recovering" first? shows them just hunted last?
 
 ```{r}
 ## plot prey from simulation 2 where 
 plot(x = tset, y = X.simu2, #putting prey into y axis, timeseries along x
      type = 'l', las = 1, lwd = 2, col = Xcol, #visuals
      xlab = 'Time', ylab = 'Density', #labels
-     xlim = c(0, 210), ylim = c(0, 65)) #bounds of axes
+     xlim = c(0, 210), ylim = c(0, 70)) #bounds of axes
 ## plot predator
 lines(x = tset, y = P.simu2, #adding pred line
       lwd = 2, col = Pcol) #visuals
 
 #this part is for the second half of the graph - later chunk of time steps 
 ## plot prey
-lines(x = tset2, y = X.simu3, #prey from this for() loop
+lines(x = tset2, y = X.simu5, #prey from this for() loop
       lwd = 2, col = Xcol) #visuals
 ## plot predator
-lines(x = tset2, y = P.simu3, #predator for this for() loop in y axis
+lines(x = tset2, y = P.simu5, #predator for this for() loop in y axis
       lwd = 2, col = Pcol) #visuals
 
 # add a legend
@@ -885,9 +883,9 @@ lines(x = c(t_Xstart, t_stophunt), y = c(3, 3),
 text(x = 142, y = 2.8, 'Prey being hunted', cex = .7)
 
 # add horizontal line to indicate where predator hunting occurred
-lines(x = c(t_Pstart, t_stophunt), y = c(0, 0), 
+lines(x = c(t_Pstart, t_stopP), y = c(0, 0), 
       lwd = 10, col = Pcol)
-text(x = 142, y = -.2, 'Predator being hunted', cex = .7)
+text(x = 180, y = -.2, 'Predator being hunted', cex = .7)
 
 ```
 
@@ -955,8 +953,6 @@ Question 3: Choose your own bifurcation adventure
 
 a. Choose a parameter other than Y, and make two bifurcation diagrams with this parameter on the x-axis. One bifurcation diagram should show the stable prey equilibrium ($X*$), and the other should show the stable predator equilibrium ($P*$).
 
-###?how is this different
-
 ```{r}
 #my parameter will be M
 Mset <- seq(from = 0, to = 1000,length.out = 50)
@@ -981,8 +977,8 @@ for(j in 1:length(Mset)){
 		P <- P.simu[i-1]
 		
 		# calculating change in population size
-		dX <- ( r_x*X*(1-X/K_x) - a_x*P*X ) * dt
-		dP <- ( P*(c*(a_x*X+a_y*Y)-d_p)*(1-P/K_p)) * dt
+		dX <- ( r_x*X*(1-X/K_x) - a_x*P*X ) * dt #equation without hunting
+		dP <- ( P*(c*(a_x*X+a_y*Y)-d_p)*(1-P/K_p)) * dt #equation without hunting
 		
 		# calculating total population size
 		X.simu[i] <- X.simu[i-1] + dX
@@ -1105,6 +1101,16 @@ legend(x = 60, y = 60,
        lwd = 2,
        col = c(Xcol, Pcol))
 
+#add numerical values for prey/preds equlibrium
+text(x = 60, y = 30, 'Prey equilibirum = 35', cex = .7)
+text(x = 60, y = 5, 'Predator equilibirum = 1.2187e-09', cex = .7)
+
+#print values for equlibrium of prey:
+P.simu6[20000] #print value at last time step of predator
+X.simu6[20000] #print value at last time step of predator
+
+
+
 ```
 ##?how do we find tehse w math?
 
@@ -1160,7 +1166,8 @@ for(i in 2:length(tset2)){ #start at time step 2 from the second time step we se
 	P.simu3[i] <- P.simu3[i-1] + dP
 }
 ```
-plot our timeseries.
+
+plot
 ```{r}
 # Scenario 3: Synchronous
 
@@ -1256,7 +1263,7 @@ text(x = 110, y = 60, 'Predator hunt stop', cex = .7)
 ```
 ###PREY FIRST
 ```{r}
-#PREDATOR FIRST
+#PREY FIRST
 t_stopX <- 110 #prey stop comes first
 t_stopP <- 140 #predator stop comes after
 
@@ -1296,7 +1303,7 @@ for(i in 2:length(tset2)){
 # plot prey (X.simu4) against time (tset2)
 plot(x = tset2, y = X.simu4,
      type = 'l', las = 1, lwd = 2, col = Xcol,
-     xlab = 'Time', ylab = 'Density', main = "PREDATOR FIRST",
+     xlab = 'Time', ylab = 'Density', main = "PREY FIRST",
      ylim = c(0, 70))
 
 # plot predator (P.simu4) against time (tset2)
@@ -1346,7 +1353,6 @@ c. Compare your findings to one another. For which scenario was overall recovery
 d. Compare your findings to those of Samhouri et al. (2017). What do your results suggest about the importance of a secondary prey type to predator-first recovery?  
 
 **They agree that stopping hunting of prey and predator in a synchronous timeline lead to fastest recovery. Secondary prey types are important in leading to predator first recovery because the other two prey types are then impacted by the predator population and the high density of one prey type leads to low densities of the other as one gets preyed upon more.**
-
 
 
 = /2 points total  
