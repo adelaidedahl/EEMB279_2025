@@ -1549,6 +1549,10 @@ for (i in 2:length(tset)) {
 # check
 head(P.simu6)
 
+```
+
+## ignore these plots
+```{r, echo = FALSE}
 ##PLOTS
 
 ## (a) D_H = D_P (synchronous - simu 4)
@@ -1686,8 +1690,46 @@ legend(x = 15, y = Pmax.mut*.9,
        lwd = 2, 
        col = c('lightblue4', 'lightblue3', 'lightblue2', 'lightblue1'),
        bg = 'white')
-
 ```
+
+
+# plots for Q1:
+```{r}
+## Question 2D work here
+# all host population sizes at t = 1000
+plot(x = Xset, y = H.simu4[1000,], 
+     type = 'l', lwd = 2, col = Hcol, 
+     xlab = 'Location', ylab = 'Host Population Size', 
+     main = 'Host pop sizes, different order of mutualist introduction (t = 1000)')
+lines(x = Xset, y = H.simu5[1000,],
+      lwd = 2, col = 'seagreen3')
+lines(x = Xset, y = H.simu6[1000,],
+      lwd = 2, col = 'seagreen2')
+#adding legend
+legend(x = 7, y = 35, 
+       legend = c('H with same speed mutualist (D_H = D_P)','H with faster host (D_H > D_P)','H with with faster mutualist (D_H < D_P)'), 
+       lwd = 2, 
+       col = c(Hcol,'seagreen3','seagreen2'),
+       bg = 'white')
+
+# all partner population sizes at t = 1000
+plot(x = Xset, y = P.simu4[1000,], 
+     type = 'l', lwd = 2, col = Pcol, 
+     xlab = 'Location', ylab = 'Partner Population Size', 
+     main = 'Partner pop sizes, different order of mutualist introduction (t = 1000)')
+lines(x = Xset, y = P.simu5[1000,],
+      lwd = 2, col = 'lightblue4')
+lines(x = Xset, y = P.simu6[1000,],
+      lwd = 2, col = 'lightblue3')
+
+# add a legend
+legend(x = 7, y = 35, 
+       legend = c('P with same speed mutualist (D_H = D_P)','P with faster host (D_H > D_P)','P with with faster mutualist (D_H < D_P)'),
+       lwd = 2, 
+       col = c(Pcol,'lightblue4','lightblue3'),
+       bg = 'white')
+```
+
 
 /2 axes for host and partner graphs  
 /6 three scenarios for host and partner  
@@ -1696,13 +1738,13 @@ legend(x = 15, y = Pmax.mut*.9,
 
 b. Under what scenario does invasion happen fastest?   
 
-**Partner-first dispersal (steepest slope)**
+**Host-first dispersal (Goes the furthest)**
 
 = /2 points total  
 
 c. Why does (or does not) a faster partner dispersal rate accelerate invasion?  
 
-**Faster partner dispersal accelerates the invasion because if partners are already present in the habitat when the host arrives, there are favorable conditions for host survival and invasion can move faster. Although Host-first seems to move further over time (progressing into further away patches by day 3000), the slope in partner-first is steepest, indicating accelerated invasion. This is possibly because there is a mutualism between the partner and host, so presence of the partner in the environment is good for when the host arrives, vs when host-first occurs, they are not doing as well without the partner.**
+**Host-first dispersal accelerates the invasion because the partner needs the host to survive so presence of the host already in the system creates favorable conditions for partner survival. Host-first also moves further over time (progressing into further away patches by day 3000) and the steep slope of the partner first and synchronous invasinos show it quickly goes to a population of zero.**
 
 = /2 points total
 
@@ -1764,7 +1806,7 @@ for (i in 2:length(tset)) {
 	}
 }
 
-tail(H.simu.par2)
+#tail(H.simu.par2)
 
 
 ```
@@ -1815,7 +1857,7 @@ for (i in 2:length(tset)) {
 	}
 }
 
-tail(H.simu.par3)
+#tail(H.simu.par3)
 ```
 
 c. Faster parasite: D_H = 0.001; D_P = 0.01  
@@ -1864,7 +1906,7 @@ for (i in 2:length(tset)) {
 	}
 }
 
-tail(H.simu.par4)
+#tail(H.simu.par4)
 ```
 
 d. Make two plots that compare the host (plot 1) and partner's (plot 2) invasion fronts on Day 1000 for (a) D_H = D_P, (b) D_H > D_P, and (c) D_H < D_P. Be sure to include a legend!  
@@ -1874,28 +1916,33 @@ d. Make two plots that compare the host (plot 1) and partner's (plot 2) invasion
 # all host population sizes at t = 1000
 plot(x = Xset, y = H.simu.par2[1000,], 
      type = 'l', lwd = 2, col = Hcol, 
-     xlab = 'Location',ylab = 'Host or Partner Population Size', 
-     main = '')
+     xlab = 'Location', ylab = 'Host Population Size', 
+     main = 'Host pop sizes, different order of parasite introduction (t = 1000)')
 lines(x = Xset, y = H.simu.par3[1000,],
       lwd = 2, col = 'seagreen3')
 lines(x = Xset, y = H.simu.par4[1000,],
       lwd = 2, col = 'seagreen2')
+# add a legend
+legend(x = 10, y = 12, 
+       legend = c('Day 1000, H (D_H = D_P)','Day 1000, H (D_H > D_P)','Day 1000, H (D_H < D_P)'), 
+       lwd = 2, 
+       col = c(Hcol,'seagreen3','seagreen2'),
+       bg = 'white')
 
 # all partner population sizes at t = 1000
-lines(x = Xset, y = P.simu.par2[1000,],
-      lwd = 2, col = 'lightblue4')
+plot(x = Xset, y = P.simu.par2[1000,], 
+     type = 'l', lwd = 2, col = Pcol, 
+     xlab = 'Location', ylab = 'Partner Population Size', 
+     main = 'Parasite pop sizes, different order of parasite introduction (t = 1000)')
 lines(x = Xset, y = P.simu.par3[1000,],
       lwd = 2, col = 'lightblue3')
 lines(x = Xset, y = P.simu.par4[1000,],
       lwd = 2, col = 'lightblue2')
-
 # add a legend
-legend(x = 10, y = 12, 
-       legend = c('Day 1000, H (D_H = D_P)','Day 1000, H (D_H > D_P)','Day 1000, H (D_H < D_P)',
-                'Day 1000, P (D_H = D_P)','Day 1000, P (D_H > D_P)','Day 1000, P (D_H < D_P)'), 
+legend(x = 10, y = 10, 
+       legend = c('Day 1000, P (D_H = D_P)','Day 1000, P (D_H > D_P)','Day 1000, P (D_H < D_P)'), 
        lwd = 2, 
-       col = c(Hcol,'seagreen3','seagreen2',
-             'lightblue4','lightblue3','lightblue2'),
+       col = c(Pcol ,'lightblue3','lightblue2'),
        bg = 'white')
 
 ```
@@ -1911,7 +1958,7 @@ Question 3: Invasion scenario reflection
 
 Under what scenario does invasion happen fastest?  
 
-**Synchronous or partner-first dispersal appear to be the fastest invasions (the lines furthest to the left of the figure)**
+**Host-first dispersal appears to be the fastest invasion (the lines furthest to the right of the figure that progress the furthest)**
 
 = /2 points total  
 
@@ -2071,81 +2118,98 @@ tail(H.simu.agc)
 
 ```{r}
 # invasion front plots
-# plot H at time 0 for agent A
-plot(x = Xset, y = H.simu.aga[1,], 
+# plot H at time 1000 for agent A
+plot(x = Xset, y = H.simu.aga[1000,], 
      type = 'l', lwd = 2, col = Hcol, 
      xlab = 'Location', ylab = 'Host Population Size', 
-     main = 'Invasion front agent A',
-     ylim = c(0, K), las = 1)
-# plot H at time 1000
-lines(x = Xset, y = H.simu.aga[1000,],
-      lwd = 2, col = 'seagreen3')
-# plot H at time 2000
+     main = 'Invasion front of agents A - C, days 1000 - 3000',
+     ylim = c(0, 17), las = 1)
+# plot H agent A at time 2000
 lines(x = Xset, y = H.simu.aga[2000,],
       lwd = 2, col = 'seagreen2')
-# plot H at time 3000
+# plot H agent A at time 3000
 lines(x = Xset, y = H.simu.aga[3000,],
       lwd = 2, col = 'seagreen1')
+# plot H agent b at time 1000
+lines(x = Xset, y = H.simu.agb[1000,],
+      lwd = 2, col = 'red')
+# plot H agent b at time 2000
+lines(x = Xset, y = H.simu.agb[2000,],
+      lwd = 2, col = 'red3')
+# plot H agent b at time 3000
+lines(x = Xset, y = H.simu.agb[3000,],
+      lwd = 2, col = 'red4')
+# plot H agent c at time 1000
+lines(x = Xset, y = H.simu.agc[1000,],
+      lwd = 2, col = 'lightblue')
+# plot H agent c at time 2000
+lines(x = Xset, y = H.simu.agc[2000,],
+      lwd = 2, col = 'lightblue3')
+# plot H agent c at time 3000
+lines(x = Xset, y = H.simu.agc[3000,],
+      lwd = 2, col = 'lightblue4')
+
+
 # add a legend
 legend(x = 15, y = K*.9, 
-       legend = c('Day 0', 'Day 1000', 'Day 2000', 'Day 3000'), 
+       legend = c('Day 1000, A', 'Day 2000, A', 'Day 3000, A', 'Day 1000, B', 'Day 2000, B', 'Day 3000, B', 'Day 1000, C', 'Day 2000, C', 'Day 3000, C'), 
        lwd = 2, 
-       col = c(Hcol, 'seagreen3', 'seagreen2', 'seagreen1'),
+       col = c(Hcol, 'seagreen2', 'seagreen1', 'red', 'red3', 'red4', 'lightblue', 'lightblue3', 'lightblue4'),
        bg = 'white')
 
 #not sure why this is beign weird
 ```
 
-### ?? this shows up with weird inital condition 
+### Just to see some others:
 
-```{r Agent B plot}
+```{r Agent B H plot}
 # plot H at time 0 for agent b
 plot(x = Xset, y = H.simu.agb[1,], 
-     type = 'l', lwd = 2, col = Hcol, 
+     type = 'l', lwd = 2, col = 'coral', 
      xlab = 'Location', ylab = 'Host Population Size', 
      main = 'Invasion front agent B',
      ylim = c(0, K), las = 1)
 # plot H at time 1000
 lines(x = Xset, y = H.simu.agb[1000,],
-      lwd = 2, col = 'seagreen3')
+      lwd = 2, col = 'red')
 # plot H at time 2000
 lines(x = Xset, y = H.simu.agb[2000,],
-      lwd = 2, col = 'seagreen2')
+      lwd = 2, col = 'red3')
 # plot H at time 3000
 lines(x = Xset, y = H.simu.agb[3000,],
-      lwd = 2, col = 'seagreen1')
+      lwd = 2, col = 'red4')
 # add a legend
 legend(x = 15, y = K*.9, 
        legend = c('Day 0', 'Day 1000', 'Day 2000', 'Day 3000'), 
        lwd = 2, 
-       col = c(Hcol, 'seagreen3', 'seagreen2', 'seagreen1'),
+       col = c('coral', 'red', 'red3', 'red4'),
        bg = 'white')
 ```
 
-### also odd inital condition - check this
+### agent C
 
-```{r Agent C plot}
+```{r Agent C H plot}
 
-# plot H at time 0 for agent b
+# plot H at time 0 for agent c
 plot(x = Xset, y = H.simu.agc[1,], 
-     type = 'l', lwd = 2, col = Hcol, 
+     type = 'l', lwd = 2, col = Pcol, 
      xlab = 'Location', ylab = 'Host Population Size', 
      main = 'Invasion front agent C',
      ylim = c(0, K), las = 1)
 # plot H at time 1000
 lines(x = Xset, y = H.simu.agc[1000,],
-      lwd = 2, col = 'seagreen3')
+      lwd = 2, col = 'lightblue')
 # plot H at time 2000
 lines(x = Xset, y = H.simu.agc[2000,],
-      lwd = 2, col = 'seagreen2')
+      lwd = 2, col = 'lightblue3')
 # plot H at time 3000
 lines(x = Xset, y = H.simu.agc[3000,],
-      lwd = 2, col = 'seagreen1')
+      lwd = 2, col = 'lightblue4')
 # add a legend
 legend(x = 15, y = K*.9, 
        legend = c('Day 0', 'Day 1000', 'Day 2000', 'Day 3000'), 
        lwd = 2, 
-       col = c(Hcol, 'seagreen3', 'seagreen2', 'seagreen1'),
+       col = c(Pcol, 'lightblue', 'lightblue3', 'lightblue4'),
        bg = 'white')
 
 ```
